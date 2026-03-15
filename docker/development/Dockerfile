@@ -31,3 +31,7 @@ ARG GID=1000
 
 ENV PUID=${UID}
 ENV PGID=${GID}
+ENV AUTORUN_ENABLED=true
+
+COPY docker/development/entrypoint.sh /etc/entrypoint.d/00-fix-permissions.sh
+RUN chmod +x /etc/entrypoint.d/00-fix-permissions.sh

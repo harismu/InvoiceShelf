@@ -5,12 +5,11 @@ services:
       context: ../../
       dockerfile: docker/development/Dockerfile
       target: development
+      args:
+        - UID=1000
+        - GID=1000
     ports:
       - "80:8080"
-    environment:
-      - PUID=${USRID:-1000}
-      - PGID=${GRPID:-1000}
-      - AUTORUN_ENABLED=true   # lets the image run composer/migrations etc
     volumes:
       - ../../:/var/www/html
       # - vendor:/var/www/html/vendor  # vendor lives in Docker, not on host
