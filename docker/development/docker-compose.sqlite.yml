@@ -17,20 +17,27 @@ services:
     # networks:
     #   - invoiceshelf-dev
 
-  adminer:
-    container_name: invoiceshelf-dev-adminer
-    build:
-      context: ../../
-      dockerfile: docker/development/adminer/Dockerfile
-    environment:
-      ADMINER_PLUGINS: tables-filter
-      ADMINER_DESIGN: konya
-    volumes:                                                                              
-      - ../../database:/database
+  node:
+    container_name: invoiceshelf-dev-node
+    image: node:20-alpine
+    working_dir: /var/www/html
+    volumes:
+      - ../../:/var/www/html
     ports:
-      - '8080:8080'
+      - "5173:5173"
+    command: sh -c "yarn && yarn dev"
     networks:
       - invoiceshelf-dev
+
+  datasette:
+    image: datasetteproject/datasette
+    restart: unless-stopped
+    ports:
+      - "8080:8001"
+    volumes:
+      - ../../storage/app:/data
+    user: root
+    command: datasette --host 0.0.0.0 /data/database.sqlite
 
   # mail:
   #   container_name: invoiceshelf-dev-mailpit
