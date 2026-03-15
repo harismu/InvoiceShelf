@@ -23,7 +23,7 @@ services:
       - CACHE_STORE=file
       - SESSION_DRIVER=file
       - SESSION_LIFETIME=240
-      - SESSION_DOMAIN=localhost
+      - SESSION_DOMAIN=fenixinvoice.duckdns.org
       - SANCTUM_STATEFUL_DOMAINS=fenixinvoice.duckdns.org
     restart: unless-stopped
 networks:
