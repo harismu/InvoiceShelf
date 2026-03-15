@@ -7,6 +7,7 @@
         @endforeach
         <th class="pr-20 text-right item-table-heading">@lang('pdf_quantity_label')</th>
         <th class="pr-20 text-right item-table-heading">@lang('pdf_price_label')</th>
+        <th class="pr-20 text-right item-table-heading">Govt Fee</th>
         @if($invoice->discount_per_item === 'YES')
         <th class="pl-10 text-right item-table-heading">@lang('pdf_discount_label')</th>
         @endif
@@ -49,6 +50,17 @@
                 style="vertical-align: top;"
             >
                 {!! format_money_pdf($item->price, $invoice->customer->currency) !!}
+            </td>
+
+            <td
+                class="pr-20 text-right item-cell"
+                style="vertical-align: top;"
+            >
+                @if($item->govt_fee)
+                    {!! format_money_pdf($item->govt_fee, $invoice->customer->currency) !!}
+                @else
+                    {!! format_money_pdf(0, $invoice->customer->currency) !!}
+                @endif
             </td>
 
             @if($invoice->discount_per_item === 'YES')

@@ -6,6 +6,7 @@
           <col style="width: 40%; min-width: 280px" />
           <col style="width: 10%; min-width: 120px" />
           <col style="width: 15%; min-width: 120px" />
+          <col style="width: 15%; min-width: 120px" />
           <col
             v-if="store[storeProp].discount_per_item === 'YES'"
             style="width: 15%; min-width: 160px"
@@ -55,6 +56,20 @@
                       :key="selectedCurrency"
                       v-model="price"
                       :invalid="v$.price.$error"
+                      :content-loading="loading"
+                      :currency="selectedCurrency"
+                    />
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td class="px-5 py-4 text-left align-top">
+              <div class="flex flex-col">
+                <div class="flex-auto flex-fill bd-highlight">
+                  <div class="relative w-full">
+                    <BaseMoney
+                      :key="selectedCurrency"
+                      v-model="govt_fee"
                       :content-loading="loading"
                       :currency="selectedCurrency"
                     />
@@ -155,7 +170,7 @@
                 :item-index="index"
                 :tax-data="tax"
                 :taxes="itemData.taxes"
-                :discounted-total="total"
+                :discounted-total="discountedSubtotal"
                 :total-tax="totalSimpleTax"
                 :total="subtotal"
                 :currency="currency"
@@ -264,6 +279,18 @@ const price = computed({
   },
 })
 
+const govt_fee = computed({
+  get: () => {
+    const fee = props.itemData.govt_fee
+    return fee / 100
+  },
+
+  set: (newValue) => {
+    let fee = Math.round(newValue * 100)
+    updateItemAttribute('govt_fee', fee)
+  },
+})
+
 const subtotal = computed(() => Math.round(props.itemData.price * props.itemData.quantity))
 
 const discount = computed({
@@ -277,6 +304,10 @@ const discount = computed({
 })
 
 const total = computed(() => {
+  return subtotal.value - props.itemData.discount_val + ((props.itemData.govt_fee || 0) * props.itemData.quantity)
+})
+
+const discountedSubtotal = computed(() => {
   return subtotal.value - props.itemData.discount_val
 })
 
@@ -401,6 +432,7 @@ function onSelectItem(itm) {
   props.store.$patch((state) => {
     state[props.storeProp].items[props.index].name = itm.name
     state[props.storeProp].items[props.index].price = itm.price
+    state[props.storeProp].items[props.index].govt_fee = itm.govt_fee
     state[props.storeProp].items[props.index].item_id = itm.id
     state[props.storeProp].items[props.index].description = itm.description
 

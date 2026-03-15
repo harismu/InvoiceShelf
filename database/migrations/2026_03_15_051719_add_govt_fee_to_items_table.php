@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->decimal('govt_fee', 15, 2)->default(0)->after('price');
+            $table->unsignedBigInteger('govt_fee')->default(0)->after('price');
         });
 
         // Also add to invoice_items (the snapshot table used on saved invoices)
         Schema::table('invoice_items', function (Blueprint $table) {
-            $table->decimal('govt_fee', 15, 2)->default(0)->after('price');
+            $table->unsignedBigInteger('govt_fee')->default(0)->after('price');
         });
 
         // Same for estimate_items if you use estimates
         Schema::table('estimate_items', function (Blueprint $table) {
-            $table->decimal('govt_fee', 15, 2)->default(0)->after('price');
+            $table->unsignedBigInteger('govt_fee')->default(0)->after('price');
         });
     }
 
