@@ -5,9 +5,10 @@ import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
   server: {
-    host: 'invoiceshelf.test',
+    host: '0.0.0.0',
+    origin: 'http://localhost:5173',
     hmr: {
-      host: 'invoiceshelf.test',
+      host: 'localhost',
     }
   },
   resolve: {
