@@ -1,4 +1,5 @@
-FROM --platform=$BUILDPLATFORM node:20 AS static_builder
+ARG TARGET_PLATFORM=linux/amd64
+FROM --platform=$TARGET_PLATFORM node:20 AS static_builder
     WORKDIR /var/www/html
     COPY . /var/www/html
     RUN yarn && yarn build

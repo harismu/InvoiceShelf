@@ -6,11 +6,9 @@
 services:
   webapp:
     container_name: invoiceshelf-variant-sqlite
-    build:
-      context: ../../
-      dockerfile: docker/production/Dockerfile
+    image: ghcr.io/harismu/invoiceshelfapp:latest
     ports:
-      - "8090:8080" # 8090 is the public port.
+      - "80:8080" # 80 is the public port.
     volumes:
       - invoiceshelf_storage:/var/www/html/storage
     networks:
@@ -19,14 +17,14 @@ services:
       - APP_NAME=InvoiceShelf
       - APP_ENV=production
       - APP_DEBUG=false
-      - APP_URL=http://localhost:8090
+      - APP_URL=http://fenixinvoice.duckdns.org
       - DB_CONNECTION=sqlite
       - DB_DATABASE=/var/www/html/storage/app/database.sqlite # please don't touch this!
       - CACHE_STORE=file
       - SESSION_DRIVER=file
       - SESSION_LIFETIME=240
       - SESSION_DOMAIN=localhost
-      - SANCTUM_STATEFUL_DOMAINS=localhost:8090
+      - SANCTUM_STATEFUL_DOMAINS=fenixinvoice.duckdns.org
     restart: unless-stopped
 networks:
   invoiceshelf:
