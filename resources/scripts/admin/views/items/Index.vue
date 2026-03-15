@@ -172,6 +172,13 @@
           />
         </template>
 
+        <template #cell-govt_fee="{ row }">
+          <BaseFormatMoney
+            :amount="row.data.govt_fee"
+            :currency="companyStore.selectedCompanyCurrency"
+          />
+        </template>
+
         <template #cell-created_at="{ row }">
           <span>{{ row.data.formatted_created_at }}</span>
         </template>
@@ -249,6 +256,7 @@ const itemColumns = computed(() => {
     },
     { key: 'unit_name', label: t('items.unit') },
     { key: 'price', label: t('items.price') },
+    { key: 'govt_fee', label: t('items.govt_fee') },
     { key: 'created_at', label: t('items.added_on') },
 
     {

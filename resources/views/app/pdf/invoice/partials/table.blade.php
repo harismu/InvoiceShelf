@@ -1,13 +1,13 @@
 <table width="100%" class="items-table" cellspacing="0" border="0">
     <tr class="item-table-heading-row">
         <th width="2%" class="pr-20 text-right item-table-heading">#</th>
-        <th width="40%" class="pl-0 text-left item-table-heading">@lang('pdf_items_label')</th>
+        <th width="30%" class="pl-0 text-left item-table-heading">@lang('pdf_items_label')</th>
         @foreach($customFields as $field)
             <th class="text-right item-table-heading">{{ $field->label }}</th>
         @endforeach
         <th class="pr-20 text-right item-table-heading">@lang('pdf_quantity_label')</th>
+        <th class="pr-20 text-right item-table-heading">@lang('pdf_govt_fee_label')</th>
         <th class="pr-20 text-right item-table-heading">@lang('pdf_price_label')</th>
-        <th class="pr-20 text-right item-table-heading">Govt Fee</th>
         @if($invoice->discount_per_item === 'YES')
         <th class="pl-10 text-right item-table-heading">@lang('pdf_discount_label')</th>
         @endif
@@ -45,12 +45,6 @@
             >
                 {{$item->quantity}} @if($item->unit_name) {{$item->unit_name}} @endif
             </td>
-            <td
-                class="pr-20 text-right item-cell"
-                style="vertical-align: top;"
-            >
-                {!! format_money_pdf($item->price, $invoice->customer->currency) !!}
-            </td>
 
             <td
                 class="pr-20 text-right item-cell"
@@ -61,6 +55,13 @@
                 @else
                     {!! format_money_pdf(0, $invoice->customer->currency) !!}
                 @endif
+            </td>
+
+            <td
+                class="pr-20 text-right item-cell"
+                style="vertical-align: top;"
+            >
+                {!! format_money_pdf($item->price, $invoice->customer->currency) !!}
             </td>
 
             @if($invoice->discount_per_item === 'YES')
