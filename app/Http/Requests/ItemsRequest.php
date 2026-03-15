@@ -32,6 +32,7 @@ class ItemsRequest extends FormRequest
             'description' => [
                 'nullable',
             ],
+            'govt_fee' => 'nullable|numeric|min:0',
         ];
     }
 }

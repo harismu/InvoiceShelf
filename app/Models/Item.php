@@ -23,6 +23,7 @@ class Item extends Model
     {
         return [
             'price' => 'integer',
+            'govt_fee' => 'integer',
         ];
     }
 

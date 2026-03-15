@@ -45,6 +45,16 @@
           </BaseInputGroup>
 
           <BaseInputGroup
+            :label="$t('items.govt_fee')"
+            :content-loading="isFetchingInitialData"
+          >
+            <BaseMoney
+              v-model="itemStore.currentItem.govt_fee"
+              :content-loading="isFetchingInitialData"
+            />
+          </BaseInputGroup>
+
+          <BaseInputGroup
             :content-loading="isFetchingInitialData"
             :label="$t('items.unit')"
           >

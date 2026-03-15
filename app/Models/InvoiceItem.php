@@ -23,6 +23,7 @@ class InvoiceItem extends Model
     {
         return [
             'price' => 'integer',
+            'govt_fee' => 'integer',
             'total' => 'integer',
             'discount' => 'float',
             'quantity' => 'float',

@@ -85,6 +85,7 @@ class InvoicesRequest extends FormRequest
                 'numeric',
                 'required',
             ],
+            'items.*.govt_fee' => 'nullable|numeric|min:0',
         ];
 
         $companyCurrency = CompanySetting::getSetting('currency', $this->header('company'));
