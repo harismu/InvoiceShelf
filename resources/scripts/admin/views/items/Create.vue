@@ -49,7 +49,7 @@
             :content-loading="isFetchingInitialData"
           >
             <BaseMoney
-              v-model="itemStore.currentItem.govt_fee"
+              v-model="govtFee"
               :content-loading="isFetchingInitialData"
             />
           </BaseInputGroup>
@@ -184,6 +184,12 @@ const price = computed({
   get: () => itemStore.currentItem.price / 100,
   set: (value) => {
     itemStore.currentItem.price = Math.round(value * 100)
+  },
+})
+const govtFee = computed({
+  get: () => itemStore.currentItem.govt_fee / 100,
+  set: (value) => {
+    itemStore.currentItem.govt_fee = Math.round(value * 100)
   },
 })
 
