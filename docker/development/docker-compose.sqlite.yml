@@ -1,33 +1,21 @@
 services:
-  php-fpm:
+  php:
     container_name: invoiceshelf-dev-php
     build:
       context: ../../
       dockerfile: docker/development/Dockerfile
-      args:
-        - UID=${USRID:-1000}
-        - GID=${GRPID:-1000}
       target: development
-    volumes:
-      - ../../:/var/www/html
-    networks:
-      - invoiceshelf-dev
-
-  nginx:
-    container_name: invoiceshelf-dev-nginx
-    build:
-      context: ../../
-      dockerfile: docker/development/nginx.Dockerfile
-    environment:
-      - "PHP_FPM_HOST=php-fpm:9000"
     ports:
-      - '80:80'
+      - "80:8080"
+    environment:
+      - PUID=${USRID:-1000}
+      - PGID=${GRPID:-1000}
+      - AUTORUN_ENABLED=true   # lets the image run composer/migrations etc
     volumes:
       - ../../:/var/www/html
-    networks:
-      invoiceshelf-dev:
-        aliases:
-          - invoiceshelf.test
+      # - vendor:/var/www/html/vendor  # vendor lives in Docker, not on host
+    # networks:
+    #   - invoiceshelf-dev
 
   adminer:
     container_name: invoiceshelf-dev-adminer
@@ -37,21 +25,24 @@ services:
     environment:
       ADMINER_PLUGINS: tables-filter
       ADMINER_DESIGN: konya
-    volumes:
+    volumes:                                                                              
       - ../../database:/database
     ports:
       - '8080:8080'
     networks:
       - invoiceshelf-dev
 
-  mail:
-    container_name: invoiceshelf-dev-mailpit
-    image: axllent/mailpit:latest
-    ports:
-      - '1025:1025'
-      - '8025:8025'
-    networks:
-      - invoiceshelf-dev
+  # mail:
+  #   container_name: invoiceshelf-dev-mailpit
+  #   image: axllent/mailpit:latest
+  #   ports:
+  #     - '1025:1025'
+  #     - '8025:8025'
+  #   networks:
+  #     - invoiceshelf-dev
 
 networks:
   invoiceshelf-dev:
+
+# volumes:
+#   vendor:
