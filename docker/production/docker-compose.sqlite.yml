@@ -8,7 +8,7 @@ services:
     container_name: invoiceshelf-variant-sqlite
     image: ghcr.io/harismu/invoiceshelfapp:latest
     ports:
-      - "80:8080" # 80 is the public port.
+      - "127.0.0.1:3001:8080" # 3001 is the port used in nginx
     volumes:
       - invoiceshelf_storage:/var/www/html/storage
     networks:
